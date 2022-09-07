@@ -43,13 +43,15 @@ const incrementCallCount = () => {
 const delay = (time) => {
   // console.log('rate-limit', 'calling', 'delay');
   incrementCallCount();
-  return new Promise((resolve) => {
-    const fn = () => {
-      // console.log('rate-limit', 'done waiting', 'time', time);
-      resolve();
-    };
-    setTimeout(fn, time);
-  });
+  if (!isNaN(time)) {
+    return new Promise((resolve) => {
+      const fn = () => {
+        // console.log('rate-limit', 'done waiting', 'time', time);
+        resolve();
+      };
+      setTimeout(fn, time);
+    });
+  }
 };
 
 const getHistogram = () => {
@@ -114,7 +116,7 @@ const sendRequest = async (formData) => {
     // console.log('url', url);
     // console.log('apiUrl.protocol', apiUrl.protocol);
     const req = moduleRef.request(options, async (res) => {
-      // console.log('res.statusCode', res.statusCode);
+      console.log('res.statusCode', res.statusCode);
       if (res.statusCode < 200 || res.statusCode > 299) {
         // console.trace('error', res.statusCode);
         let chunks = '';
@@ -127,24 +129,6 @@ const sendRequest = async (formData) => {
           reject(Error(JSON.stringify({body: chunks, statusCode: res.statusCode})));
         });
       } else {
-        // console.log('res', res);
-        // console.log('statusCode', res.statusCode);
-        // console.log('headers', res.headers);
-        // const lastLimit = parseInt(res.headers['x-ratelimit-limit'], 10);
-        // console.log('headers', 'lastLimit', lastLimit);
-        const lastRemaining = parseInt(res.headers['x-ratelimit-remaining'], 10);
-        // console.log('headers', 'lastRemaining', lastRemaining);
-        const lastReset = parseInt(res.headers['x-ratelimit-reset'], 10);
-        // console.log('headers', 'reset', lastReset);
-        const time = Math.floor(Date.now() / 1000);
-        // console.log('headers', 'timer', time);
-        const timeRemaining = lastReset-time;
-        // console.log('headers', 'timeRemaining', timeRemaining);
-        const pauseTime = Math.floor(timeRemaining/lastRemaining);
-        // console.log('headers', 'pauseTime', pauseTime);
-
-        await delay(pauseTime);
-
         let chunks = '';
         res.on('data', (chunk) => {
           chunks += chunk;
@@ -163,9 +147,35 @@ const sendRequest = async (formData) => {
           }
         });
       }
+
+      // try {
+      // console.log('res', res);
+      // console.log('statusCode', res.statusCode);
+      // console.log('headers', res.headers);
+      // const lastLimit = parseInt(res.headers['x-ratelimit-limit'], 10);
+      // console.log('headers', 'lastLimit', lastLimit);
+      const lastRemaining = parseInt(res.headers['x-ratelimit-remaining'], 10);
+      // console.log('headers', 'lastRemaining', lastRemaining);
+      const lastReset = parseInt(res.headers['x-ratelimit-reset'], 10);
+      // console.log('headers', 'reset', lastReset);
+      const time = Math.floor(Date.now() / 1000);
+      // console.log('headers', 'timer', time);
+      const timeRemaining = lastReset-time;
+      // console.log('headers', 'timeRemaining', timeRemaining);
+      const pauseTime = Math.floor(timeRemaining/lastRemaining);
+      // console.log('headers', 'pauseTime', pauseTime);
+      // console.log('headers', 'delay', 'start');
+      await delay(pauseTime);
+      // console.log('headers', 'delay', 'end');
+      // } catch(error) {
+      // console.trace(error)
+      // }
+
+      // console.log('headers', 'request', 'return');
     });
 
     req.on('error', (error) => {
+      // console.trace('error', error);
       reject(Error(error));
     });
 

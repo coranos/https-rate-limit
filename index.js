@@ -116,7 +116,7 @@ const sendRequest = async (formData) => {
     // console.log('url', url);
     // console.log('apiUrl.protocol', apiUrl.protocol);
     const req = moduleRef.request(options, async (res) => {
-      console.log('res.statusCode', res.statusCode);
+      // console.log('res.statusCode', res.statusCode);
       if (res.statusCode < 200 || res.statusCode > 299) {
         // console.trace('error', res.statusCode);
         let chunks = '';

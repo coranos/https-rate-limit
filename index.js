@@ -44,13 +44,15 @@ const delay = (time) => {
   // console.log('rate-limit', 'calling', 'delay');
   incrementCallCount();
   if (!isNaN(time)) {
-    return new Promise((resolve) => {
-      const fn = () => {
-        // console.log('rate-limit', 'done waiting', 'time', time);
-        resolve();
-      };
-      setTimeout(fn, time);
-    });
+    if (isFinite(time)) {
+      return new Promise((resolve) => {
+        const fn = () => {
+          // console.log('rate-limit', 'done waiting', 'time', time);
+          resolve();
+        };
+        setTimeout(fn, time);
+      });
+    }
   }
 };
 
@@ -95,7 +97,7 @@ const sendRequest = async (formData) => {
     const apiUrl = new URL(url);
     // console.log('apiUrl', apiUrl);
     const body = JSON.stringify(formData);
-    console.log( 'sendRequest request', body );
+    // console.log( 'sendRequest request', body );
 
     const options = {
       method: 'POST',
@@ -134,7 +136,30 @@ const sendRequest = async (formData) => {
           chunks += chunk;
         });
 
-        res.on('end', () => {
+        res.on('end', async () => {
+          // try {
+          // console.log('res', res);
+          // console.log('statusCode', res.statusCode);
+          // console.log('headers', res.headers);
+          // const lastLimit = parseInt(res.headers['x-ratelimit-limit'], 10);
+          // console.log('headers', 'lastLimit', lastLimit);
+          const lastRemaining = parseInt(res.headers['x-ratelimit-remaining'], 10);
+          // console.log('headers', 'lastRemaining', lastRemaining);
+          const lastReset = parseInt(res.headers['x-ratelimit-reset'], 10);
+          // console.log('headers', 'reset', lastReset);
+          const time = Math.floor(Date.now() / 1000);
+          // console.log('headers', 'timer', time);
+          const timeRemaining = lastReset-time;
+          // console.log('headers', 'timeRemaining', timeRemaining);
+          const pauseTime = Math.floor((timeRemaining*1000.0)/lastRemaining);
+          // console.log('headers', 'pauseTime', pauseTime);
+          // console.log('headers', 'delay', 'start');
+          await delay(pauseTime);
+          // console.log('headers', 'delay', 'end');
+          // } catch(error) {
+          // console.trace(error)
+          // }
+
           if (chunks.length == 0) {
             resolve(undefined);
           } else {
@@ -147,29 +172,6 @@ const sendRequest = async (formData) => {
           }
         });
       }
-
-      // try {
-      // console.log('res', res);
-      // console.log('statusCode', res.statusCode);
-      // console.log('headers', res.headers);
-      // const lastLimit = parseInt(res.headers['x-ratelimit-limit'], 10);
-      // console.log('headers', 'lastLimit', lastLimit);
-      const lastRemaining = parseInt(res.headers['x-ratelimit-remaining'], 10);
-      // console.log('headers', 'lastRemaining', lastRemaining);
-      const lastReset = parseInt(res.headers['x-ratelimit-reset'], 10);
-      // console.log('headers', 'reset', lastReset);
-      const time = Math.floor(Date.now() / 1000);
-      // console.log('headers', 'timer', time);
-      const timeRemaining = lastReset-time;
-      // console.log('headers', 'timeRemaining', timeRemaining);
-      const pauseTime = Math.floor(timeRemaining/lastRemaining);
-      // console.log('headers', 'pauseTime', pauseTime);
-      // console.log('headers', 'delay', 'start');
-      await delay(pauseTime);
-      // console.log('headers', 'delay', 'end');
-      // } catch(error) {
-      // console.trace(error)
-      // }
 
       // console.log('headers', 'request', 'return');
     });

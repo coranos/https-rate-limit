@@ -1,7 +1,7 @@
 {
   "name": "https-rate-limit",
   "version": "1.0.5",
-  "description": "https rate limit",
+  "description": "http and https lib that obeys rate limiting",
   "author": "Coranos",
   "license": "MIT",
   "repository": {
@@ -9,37 +9,30 @@
     "url": "git+https://github.com/coranos/https-rate-limit.git"
   },
   "scripts": {
+    "build-export-ts": "node build/export-ts.js",
     "coverage": "nyc -x 'test/util/**' -x 'test/unit/**' ./node_modules/mocha/bin/mocha.js --recursive -t 100000 test/unit",
     "docs": "jsdoc2md documentation.js index.js > docs/documentation.md",
     "eslint": "eslint --fix '**/*.js'",
     "new-config": "node scripts/new-config.js",
     "npm-check-updates": "npm-check-updates --target minor -u",
-    "preflight": "npm run touch && npm update && npm run npm-check-updates && npm i && npm audit fix && npm run eslint && npm run prettier && npm run coverage && npm run docs && npm outdated && echo 'preflight passed'",
+    "preflight": "npm run touch && npm update && npm run npm-check-updates && npm i && npm audit fix && npm run eslint && npm run prettier && npm run coverage && npm run docs  && npm run typescript && npm run build-export-ts && npm outdated && echo 'preflight passed'",
     "prettier": "prettier \"**/**.{ts,json,css,scss,html}\" --write",
+    "typescript": "./node_modules/jsdoc/jsdoc.js -t node_modules/tsd-jsdoc/dist/ documentation.js index.js -d console > index.d.ts",
     "touch": "find . -exec touch {} \\;",
     "test": "./node_modules/mocha/bin/mocha.js --recursive -t 100000 test/unit",
     "start": "node main.js"
   },
-  "dependencies": {
-    "@bananocoin/bananojs": "^2.6.7",
-    "blakejs": "^1.2.1",
-    "express": "^4.18.1",
-    "express-rate-limit": "^6.6.0",
-    "levelup": "^5.1.1",
-    "rocksdb": "^5.2.1",
-    "socket.io": "^4.5.2",
-    "socket.io-client": "^4.5.2"
-  },
+  "dependencies": {},
   "preferGlobal": true,
   "devDependencies": {
     "chai": "^4.3.6",
-    "eslint": "^8.23.0",
+    "eslint": "^8.23.1",
     "eslint-config-google": "^0.14.0",
     "jsdoc-to-markdown": "^7.1.1",
-    "memdown": "^6.1.1",
     "mocha": "^10.0.0",
-    "npm-check-updates": "^16.1.0",
+    "npm-check-updates": "^16.1.3",
     "nyc": "^15.1.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "tsd-jsdoc": "^2.5.0"
   }
 }

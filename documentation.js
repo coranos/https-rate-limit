@@ -1,7 +1,6 @@
 'use strict';
 
 /** @namespace Main */
-/** @namespace RPC */
 
 /* eslint-disable no-unused-vars */
 const index = require('./index.js');

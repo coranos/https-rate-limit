@@ -1,4 +1,5 @@
 'use strict';
+
 // libraries
 
 // modules
@@ -78,14 +79,21 @@ const getHistogram = () => {
 /**
  * Sets an authorization string (http 'Authorization' header), useful if node requires api key.
  *
- * @memberof BananodeApi
- * @param {string} authString api key as a string\
+ * @memberof Main
+ * @param {string} authString api key as a string
  * @return {undefined} returns nothing.
  */
 const setAuth = (authString) => {
   auth = authString;
 };
 
+/**
+ * sends a request, then waits for an amount of time specified by the rate limit headers sent in the response.
+ *
+ * @memberof Main
+ * @param {any} formData the form data.
+ * @return {any} returns any.
+ */
 const sendRequest = async (formData) => {
   /* istanbul ignore if */
   if (formData == undefined) {
@@ -186,6 +194,13 @@ const sendRequest = async (formData) => {
   });
 };
 
+/**
+ * Sets the url to use.
+ *
+ * @memberof Main
+ * @param {string} newUrl url as a string
+ * @return {undefined} returns nothing.
+ */
 const setUrl = (newUrl) => {
   // console.log('started serUrl', newUrl);
   url = newUrl;

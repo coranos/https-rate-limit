@@ -1,6 +1,6 @@
 {
   "name": "https-rate-limit",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "http and https lib that obeys rate limiting",
   "author": "Coranos",
   "license": "MIT",

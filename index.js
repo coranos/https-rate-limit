@@ -159,7 +159,7 @@ const sendRequest = async (formData) => {
           // console.log('headers', 'timer', time);
           const timeRemaining = lastReset-time;
           // console.log('headers', 'timeRemaining', timeRemaining);
-          const pauseTime = Math.floor((timeRemaining*1000.0)/lastRemaining);
+          const pauseTime = Math.floor((timeRemaining*1000.0)/(lastRemaining+1));
           // console.log('headers', 'pauseTime', pauseTime);
           // console.log('headers', 'delay', 'start');
           await delay(pauseTime);

@@ -136,7 +136,7 @@ const sendRequest = async (formData) => {
 
         res.on('end', () => {
           // console.trace('error', res.statusCode);
-          reject(Error(JSON.stringify({body: chunks, statusCode: res.statusCode})));
+          reject(Error(JSON.stringify({url: url, formData: formData, body: chunks, statusCode: res.statusCode})));
         });
       } else {
         let chunks = '';

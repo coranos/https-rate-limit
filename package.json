@@ -15,24 +15,23 @@
     "eslint": "eslint --fix '**/*.js'",
     "new-config": "node scripts/new-config.js",
     "npm-check-updates": "npm-check-updates --target minor -u",
-    "preflight": "npm run touch && npm update && npm run npm-check-updates && npm i && npm audit fix && npm run eslint && npm run prettier && npm run coverage && npm run docs  && npm run typescript && npm run build-export-ts && npm outdated && echo 'preflight passed'",
+    "preflight": "npm update && npm run npm-check-updates && npm i && npm audit fix && npm run eslint && npm run prettier && npm run coverage && npm run docs  && npm run typescript && npm run build-export-ts && npm outdated && echo 'preflight passed'",
     "prettier": "prettier \"**/**.{ts,json,css,scss,html}\" --write",
     "typescript": "./node_modules/jsdoc/jsdoc.js -t node_modules/tsd-jsdoc/dist/ documentation.js index.js -d console > index.d.ts",
     "touch": "find . -exec touch {} \\;",
     "test": "./node_modules/mocha/bin/mocha.js --recursive -t 100000 test/unit",
     "start": "node main.js"
   },
-  "dependencies": {},
   "preferGlobal": true,
   "devDependencies": {
-    "chai": "^4.3.6",
-    "eslint": "^8.25.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.31.0",
     "eslint-config-google": "^0.14.0",
-    "jsdoc-to-markdown": "^7.1.1",
-    "mocha": "^10.0.0",
-    "npm-check-updates": "^16.3.11",
+    "jsdoc-to-markdown": "^8.0.0",
+    "mocha": "^10.2.0",
+    "npm-check-updates": "^16.6.2",
     "nyc": "^15.1.0",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.2",
     "tsd-jsdoc": "^2.5.0"
   }
 }

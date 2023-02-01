@@ -25,13 +25,18 @@
   "preferGlobal": true,
   "devDependencies": {
     "chai": "^4.3.7",
-    "eslint": "^8.31.0",
+    "eslint": "^8.33.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc-to-markdown": "^8.0.0",
     "mocha": "^10.2.0",
-    "npm-check-updates": "^16.6.2",
+    "npm-check-updates": "^16.6.3",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.2",
+    "prettier": "^2.8.3",
     "tsd-jsdoc": "^2.5.0"
+  },
+  "overrides": {
+    "tsd-jsdoc": {
+      "jsdoc": "4.0.0"
+    }
   }
 }

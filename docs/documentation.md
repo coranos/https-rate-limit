@@ -7,6 +7,7 @@
     * [.setAuth(authString)](#Main.setAuth) ⇒ <code>undefined</code>
     * [.sendRequest(formData)](#Main.sendRequest) ⇒ <code>any</code>
     * [.setUrl(newUrl)](#Main.setUrl) ⇒ <code>undefined</code>
+    * [.setTimeout(newTimeout)](#Main.setTimeout) ⇒ <code>undefined</code>
 
 <a name="Main.setAuth"></a>
 
@@ -43,4 +44,16 @@ Sets the url to use.
 | Param | Type | Description |
 | --- | --- | --- |
 | newUrl | <code>string</code> | url as a string |
+
+<a name="Main.setTimeout"></a>
+
+### Main.setTimeout(newTimeout) ⇒ <code>undefined</code>
+Sets the timeout to use.
+
+**Kind**: static method of [<code>Main</code>](#Main)  
+**Returns**: <code>undefined</code> - returns nothing.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| newTimeout | <code>number</code> | the timeout as a number |
 

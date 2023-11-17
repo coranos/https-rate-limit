@@ -17,6 +17,12 @@ declare namespace Main {
      * @returns returns nothing.
      */
     function setUrl(newUrl: string): undefined;
+    /**
+     * Sets the timeout to use.
+     * @param newTimeout - the timeout as a number
+     * @returns returns nothing.
+     */
+    function setTimeout(newTimeout: number): undefined;
 }
 
 

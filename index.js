@@ -15,6 +15,8 @@ let moduleRef;
 let url;
 
 let auth;
+
+let timeout = 10000;
 // functions
 
 const incrementCallCount = () => {
@@ -116,7 +118,7 @@ const sendRequest = async (formData) => {
         'Content-Type': 'application/json',
         'Content-Length': body.length,
       },
-      timeout: 30000,
+      timeout: timeout,
     };
 
     if (!!auth) {
@@ -184,6 +186,11 @@ const sendRequest = async (formData) => {
       // console.log('headers', 'request', 'return');
     });
 
+    req.on('timeout', () => {
+      console.log('timeout abort');
+      req.abort();
+    });
+
     req.on('error', (error) => {
       // console.trace('error', error);
       reject(Error(error));
@@ -222,9 +229,21 @@ const setModuleRef = (newModuleRef) => {
   moduleRef = newModuleRef;
 };
 
+/**
+ * Sets the timeout to use.
+ *
+ * @memberof Main
+ * @param {number} newTimeout - the timeout as a number
+ * @return {undefined} returns nothing.
+ */
+const setTimeout = (newTimeout) => {
+  timeout = newTimeout;
+};
+
 exports.setUrl = setUrl;
 exports.setModuleRef = setModuleRef;
 exports.getModuleRef = getModuleRef;
 exports.sendRequest = sendRequest;
 exports.setAuth = setAuth;
 exports.getHistogram = getHistogram;
+exports.setTimeout = setTimeout;

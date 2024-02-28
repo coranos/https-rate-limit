@@ -236,7 +236,7 @@ const setModuleRef = (newModuleRef) => {
  * @param {number} newTimeout - the timeout as a number
  * @return {undefined} returns nothing.
  */
-const setTimeout = (newTimeout) => {
+const setOptionsTimeout = (newTimeout) => {
   timeout = newTimeout;
 };
 
@@ -246,4 +246,4 @@ exports.getModuleRef = getModuleRef;
 exports.sendRequest = sendRequest;
 exports.setAuth = setAuth;
 exports.getHistogram = getHistogram;
-exports.setTimeout = setTimeout;
+exports.setTimeout = setOptionsTimeout;
